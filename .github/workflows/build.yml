@@ -1,4 +1,4 @@
-name: Build APK from Source
+name: Build APK
 
 on: 
   workflow_dispatch:
@@ -17,10 +17,8 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Extract and Build
+      - name: Build with Gradle
         run: |
-          python3 -c "import zipfile; zipfile.ZipFile('PrivateSmsVault-v2.zip', 'r').extractall('extracted_project')"
-          cd extracted_project/PrivateSmsVault
           chmod +x gradlew
           ./gradlew assembleDebug
 
@@ -28,4 +26,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: app-debug
-          path: PrivateSmsVault/app/build/outputs/apk/debug/app-debug.apk
+          path: app/build/outputs/apk/debug/app-debug.apk
